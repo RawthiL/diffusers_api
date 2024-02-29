@@ -1,0 +1,16 @@
+---
+model:
+  name: /models/path/to/folder/with/model_index.json   # or HF model name, like "stabilityai/stable-diffusion-xl-base-1.0"
+  is_xl: true
+  has_sag: false
+  use_safetensors: true
+  float_type: fp16
+
+  # An smaller one could be:
+  # name: CompVis/stable-diffusion-v1-4
+  # is_xl: False
+  # has_sag: True
+  # use_safetensors: True
+
+app:
+  hf_cache_dir: /models   # Sets the cache directory, models are dowloaded and read from here

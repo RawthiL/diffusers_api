@@ -1,0 +1,59 @@
+name: Python
+
+on:
+  workflow_call:
+    inputs:
+      env:
+        type: string
+        required: true
+      push:
+        description: 'Should push to Dockerhub?'
+        required: true
+        type: boolean
+      api:
+        type: string
+        required: true
+    secrets:
+      DOCKERHUB_TOKEN:
+        required: true
+      DOCKERHUB_USERNAME:
+        required: true
+
+jobs:
+
+  # Lint the python code
+  lint:
+    name: Lint Python Code
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+        fetch-depth: 0
+
+    - name: Lint Code Base
+      uses: github/super-linter@v4.8.4
+      if: ${{ github.event.pull_request.merged == false }}
+      env:
+        VALIDATE_ALL_CODEBASE: false
+        VALIDATE_PYTHON_BLACK: true
+        VALIDATE_PYTHON_ISORT: true
+        LINTER_RULES_PATH: .github/linters/
+        PYTHON_BLACK_CONFIG_FILE: pyproject.toml
+        DEFAULT_BRANCH: main
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build_and_push_api:
+    name: 'Diffusers API - Build & Push'
+    needs: lint
+    if: ${{ inputs.push == true && inputs.api == 'true' }}
+    uses: './.github/workflows/python-actions.yml'
+    secrets: inherit
+    with:
+      env: ${{ inputs.env }}
+      app: api
+      imagename: diffusers_api
+      dockerfile: 'docker/Dockerfile'
+      push: ${{ inputs.push }}

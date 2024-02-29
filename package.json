@@ -1,0 +1,9 @@
+{
+    "name": "@rawthil/diffusers_api",
+    "version": "0.1.0",
+    "description": "API for diffusers deployment.",
+    "private": true,
+    "scripts": {
+        "build:docker": "./build.sh"
+    }
+}

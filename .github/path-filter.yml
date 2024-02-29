@@ -1,0 +1,9 @@
+### language filters
+python:
+  - 'api/**'
+docker:
+  - 'docker/**'
+
+### application filters
+api:
+  - 'api/**'

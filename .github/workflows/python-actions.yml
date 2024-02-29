@@ -78,11 +78,11 @@ jobs:
         env:
           IS_PROD: ${{ inputs.env == 'production' }}
         run: |
-          tag="${{ secrets.DOCKER_USERNAME }}/${{ inputs.imagename }}:dev"
+          tag="${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.imagename }}:dev"
           if ${IS_PROD} == true; then
-            tag="${{ secrets.DOCKER_USERNAME }}/${{ inputs.imagename }}:v${{ steps.version.outputs.value }} , ${{ secrets.DOCKER_USERNAME }}/${{ inputs.imagename }}:latest"
+            tag="${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.imagename }}:v${{ steps.version.outputs.value }} , ${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.imagename }}:latest"
           else
-            tag="${{ secrets.DOCKER_USERNAME }}/${{ inputs.imagename }}:dev-$(echo $GITHUB_SHA | head -c7)"
+            tag="${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.imagename }}:dev-$(echo $GITHUB_SHA | head -c7)"
           fi
           echo "value=$tag" >> $GITHUB_OUTPUT
 
@@ -91,9 +91,9 @@ jobs:
         env:
           IS_PROD: ${{ inputs.env == 'production' }}
         run: |
-          tag="${{ secrets.DOCKER_USERNAME }}/${{ inputs.app }}:stage"
+          tag="${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.app }}:stage"
           if ${IS_PROD} == true; then
-            tag="${{ secrets.DOCKER_USERNAME }}/${{ inputs.app }}:latest"
+            tag="${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.app }}:latest"
           fi
           echo "value=$tag" >> $GITHUB_OUTPUT
 

@@ -14,9 +14,9 @@ on:
         type: string
         required: true
     secrets:
-      DOCKERHUB_ACCESS_TOKEN:
+      DOCKERHUB_TOKEN:
         required: true
-      REGISTRY:
+      DOCKERHUB_USERNAME:
         required: true
 
 jobs:

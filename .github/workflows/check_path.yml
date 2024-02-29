@@ -1,0 +1,41 @@
+name: Path Check
+
+on:
+  workflow_call:
+    outputs:
+      # languages
+      python:
+        description: 'indicate that a change was made on a python app or package'
+        value: ${{ jobs.check.outputs.python }}
+      docker:
+        description: 'indicate that a change was made on a docker app or package'
+        value: ${{ jobs.check.outputs.docker }}
+      # applications
+      api:
+        description: 'indicate that a change was made on api app or any package dependency'
+        value: ${{ jobs.check.outputs.api }}
+
+jobs:
+  check:
+    name: 'Path Changes'
+    runs-on: ubuntu-latest
+    # Map the job outputs to step outputs
+    outputs:
+      # languages
+      python: ${{ steps.filter.outputs.python }}
+      docker: ${{ steps.filter.outputs.docker }}
+      # applications
+      api: ${{ steps.filter.outputs.api }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Check Path changes
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: .github/path-filter.yml
+      - name: Set outputs
+        run: |
+          echo "python=${{steps.filter.outputs.python}}" >> $GITHUB_OUTPUT
+          echo "docker=${{steps.filter.outputs.docker}}" >> $GITHUB_OUTPUT
+          echo "api=${{steps.filter.outputs.api}}" >> $GITHUB_OUTPUT

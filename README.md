@@ -10,7 +10,7 @@ chmod +x ./build.sh
 ./build.sh
 ```
 
-2. Edit the config file provided in `/config`. You need to provide a models name or a path to where it will be mounted in the docker volume. See config file for details.
+2. Edit the config file provided in `api/config`. You need to provide a models name or a path to where it will be mounted in the docker volume. See config file for details.
 
 3. Run the docker image:
 ```bash

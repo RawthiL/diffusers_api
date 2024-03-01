@@ -1,8 +1,8 @@
 ### language filters
 python:
-  - 'api/**'
+  - 'api/app/**'
 docker:
-  - 'docker/**'
+  - 'api/docker/**'
 
 ### application filters
 api:
